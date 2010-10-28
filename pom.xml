@@ -5,7 +5,7 @@
   <version>0.1.1</version>
   <name>Privateer</name>
   <description>Unit testing library for exposing all fields and methods</description>
-	<url>http://wombatnation.com/</url>
+	<url>http://wombatnation.com/privateer/</url>
 
   <properties>
     <project.build.sourceEncoding>

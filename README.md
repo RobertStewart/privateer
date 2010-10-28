@@ -1,8 +1,10 @@
 Privateer
 ================
-http://github.com/RobertStewart/privateer
+[Project site](http://wombanation.com/privateer)
 
-## Description
+[Source code on GitHub](http://github.com/RobertStewart/privateer)
+
+# Description
 Privateer is a utility class for unit testing. Privateer allows you to access
 all fields on an object, regardless of whether their accessibility is set to
 public, package, protected or private. Privateer also allows you to invoke
@@ -14,7 +16,7 @@ new Privateer object is constructed.
 Of course, you can use Privateer outside of unit tests, but that might lead to [cats
 and dogs living together or a robot uprising](http://steve-yegge.blogspot.com/2010/07/wikileaks-to-leak-5000-open-source-java.html).
 
-## Usage
+# Usage
 Privateer is very simple to use. In your code, first construct a Privateer object.
 
     Privateer p = new Privateer();
@@ -42,7 +44,7 @@ produces the output:
 The getAllFields() and getAllMethods() methods are convenient for quickly finding out what
 fields and methods are available on an object.
 
-## More Examples
+# More Examples
 Setting and getting private fields:
 
     // Create Privateer object to allow access to normally inaccessible fields and methods
@@ -97,6 +99,6 @@ The private field and methods in the NotSoPrivate class used in the unit tests f
       this.privateField = o;
     }
 
-## Credits
+# Credits
 I developed this code at [Voxify](http://voxify.com). Thanks to Voxify for allowing me to release the
 code under the open source Apache license.
