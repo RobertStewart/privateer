@@ -12,17 +12,16 @@ For convenience in writing unit tests, security is automatically disabled when a
 new Privateer object is constructed.
 
 Of course, you can use Privateer outside of unit tests, but that might lead to [cats
-and dogs living together or a robot uprising]
-(http://steve-yegge.blogspot.com/2010/07/wikileaks-to-leak-5000-open-source-java.html).
+and dogs living together or a robot uprising](http://steve-yegge.blogspot.com/2010/07/wikileaks-to-leak-5000-open-source-java.html).
 
 ## Usage
 Privateer is very simple to use. In your code, first construct a Privateer object.
 
-	Privateer p = new Privateer();
+  Privateer p = new Privateer();
 	
 Then, you can use this object to access any field or method on another object. For example, to change the value of an allegedly immutable Integer object.
 
-	Integer i = Integer.valueOf(1);
+  Integer i = Integer.valueOf(1);
   System.out.println("Immutable Integer i = " + i);
   Privateer p = new Privateer();
   try {
@@ -36,15 +35,15 @@ Then, you can use this object to access any field or method on another object. F
 
 Produces the output:
 
-	Immutable Integer i = 1
-	Immutable Integer i = 2
+  Immutable Integer i = 1
+  Immutable Integer i = 2
 	
 The getAllFields() and getAllMethods() methods are convenient for quickly finding out what fields and methods are available on an object.
 
 ## More Examples
 Setting and getting private fields:
 
-	// Create Privateer object to allow access to normally inaccessible fields and methods
+  // Create Privateer object to allow access to normally inaccessible fields and methods
   Privateer p = new Privateer();
   
   Object o = new Object();
@@ -58,7 +57,7 @@ Setting and getting private fields:
 
 Calling private methods:
 
-	// Create Privateer object to allow access to normally inaccessible fields and methods
+  // Create Privateer object to allow access to normally inaccessible fields and methods
   Privateer p = new Privateer();
       
   Object o = new Object();
@@ -82,11 +81,11 @@ If a method takes no arguments, you can pass either null or an empty Object arra
 
 If the method you want to call takes multiple arguments, add them as comma-separated items in the initializer, e.g.:
 
-	Object[] args = new Object[]{o1, o2, o3};
+  Object[] args = new Object[]{o1, o2, o3};
 
 The private field and methods in the NotSoPrivate class used in the unit tests for Privateer are declared as:
 
-	private Object privateField;
+  private Object privateField;
 
   private Object getPrivateField() {
     return privateField;
