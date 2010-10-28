@@ -1,5 +1,6 @@
-## Privateer ##
-http://github.com/RobertStewart/log4mongo-java
+Privateer
+================
+http://github.com/RobertStewart/privateer
 
 ## Description
 Privateer is a utility class for unit testing. Privateer allows you to access
@@ -10,8 +11,12 @@ any method on an object, regardless of accessibility.
 For convenience in writing unit tests, security is automatically disabled when a
 new Privateer object is constructed.
 
+Of course, you can use Privateer outside of unit tests, but that might lead to [cats
+and dogs living together or a robot uprising]
+(http://steve-yegge.blogspot.com/2010/07/wikileaks-to-leak-5000-open-source-java.html).
+
 ## Usage
-Privateer is very simple to use. In your unit test, first construct a Privateer object.
+Privateer is very simple to use. In your code, first construct a Privateer object.
 
 	Privateer p = new Privateer();
 	
@@ -34,36 +39,52 @@ Produces the output:
 	Immutable Integer i = 1
 	Immutable Integer i = 2
 	
-The getAllFields and getAllMethods methods are convenient for quickly finding out what fields and methods are available on an object.
+The getAllFields() and getAllMethods() methods are convenient for quickly finding out what fields and methods are available on an object.
 
-## Example
-The following code example is from the unit test for Privateer.
+## More Examples
+Setting and getting private fields:
 
-	// Create the Privateer class that will allow access to normally inaccessible fields and methods
-	Privateer p = new Privateer();
+	// Create Privateer object to allow access to normally inaccessible fields and methods
+  Privateer p = new Privateer();
+  
+  Object o = new Object();
+  NotSoPrivate nsp = new NotSoPrivate();
+  // Set Object o into a private field on the nsp object
+  p.setField(nsp, "privateField", o);
+  // Get object back from private method on nsp
+  Object result = p.getField(nsp, "privateField");
+  // Assert that we got back the object we set in the private field
+  assertTrue(o == result);
 
-	Object o = new Object();
-	NotSoPrivate nsp = new NotSoPrivate();
-	// Set Object o into a private field on the nsp object
-	p.setField(nsp, "privateField", o);
-	// Call a private method on nsp to get the value back
-	Object[] args = null;
-	Object result = p.callMethod(nsp, "getPrivateField", args);
-	// Assert that we got back the object we set in the private field
-	assertTrue(o == result);
+Calling private methods:
 
-	Object o2 = new Object();
-	args = new Object[] {o2};
-	// Call a private method on nsp to set value to new object
-	p.callMethod(nsp, "setPrivateField", o2);
-	result = p.callMethod(nsp, "getPrivateField", new Object[]{});
-	// Assert that we used a private method to change a private field
-	assertFalse(o == result);
-	assertTrue(o2 == result);
+	// Create Privateer object to allow access to normally inaccessible fields and methods
+  Privateer p = new Privateer();
+      
+  Object o = new Object();
+  NotSoPrivate nsp = new NotSoPrivate();
+  // Call a private method on nsp to set value to new object
+  p.callMethod(nsp, "setPrivateField", o);
+  Object[] noArgs = new Object[]{};
+  Object result = p.callMethod(nsp, "getPrivateField", noArgs);
+  // Assert that we used private methods to change a private field and retrieve its value
+  assertTrue(o == result);
+  
+  Object o2 = new Object();
+  // Could just use o2 as arg, but this is how you would pass multiple args
+  Object[] args = new Object[]{o2};
+  p.callMethod(nsp, "setPrivateField", args);
+  result = p.callMethod(nsp, "getPrivateField", noArgs);
+  // Assert that we used private methods to change a field again and retrieve its value
+  assertTrue(o2 == result);
 
 If a method takes no arguments, you can pass either null or an empty Object array as the third argument to callMethod().
 
-The private field and methods in the NotSoPrivate class in the unit test for Privateer are declared as:
+If the method you want to call takes multiple arguments, add them as comma-separated items in the initializer, e.g.:
+
+	Object[] args = new Object[]{o1, o2, o3};
+
+The private field and methods in the NotSoPrivate class used in the unit tests for Privateer are declared as:
 
 	private Object privateField;
 
