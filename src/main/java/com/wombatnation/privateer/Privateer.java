@@ -65,6 +65,23 @@ public class Privateer {
   }
   
   /**
+   * Gets the specified field on Object o, even if that field is not normally accessible.
+   * 
+   * @param o
+   * @param fieldName
+   * @param value
+   * @throws NoSuchFieldException
+   * @throws IllegalAccessException
+   */
+  public Object getField(Object o, String fieldName)
+      throws NoSuchFieldException, IllegalAccessException {
+    
+    Field field = o.getClass().getDeclaredField(fieldName);
+    field.setAccessible(true);
+    return field.get(o);
+  }
+  
+  /**
    * Sets the specified field on Object o to the specified value, even if that field is not normally accessible.
    * 
    * @param o
