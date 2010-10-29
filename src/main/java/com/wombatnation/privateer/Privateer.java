@@ -21,15 +21,16 @@ public class Privateer {
   private SecurityManager insecman = new InsecurityManager();
   
   /**
-   * Installs a SecurityManager that is completely unsecure.
+   * Constructs a Privateer object that allows you to access normally inaccessible
+   * fields and methods. It does this by installing a SecurityManager that is completely unsecure.
    */
   public Privateer() {
     secureSystem(false);
   }
   
   /**
-   * Sets whether system is secure, i.e., uses the default SecurityManager or
-   * uses an unsecure SecurityManager.
+   * Sets whether system is secure, i.e., whether it uses the default SecurityManager or
+   * unsecure SecurityManager.
    * 
    * @param secure Set to true to secure the system and to false to unsecure the system
    */
@@ -41,10 +42,10 @@ public class Privateer {
   }
   
   /**
-   * Returns all declared fields on Object o as accessible.
+   * Returns all declared Fields on Object o as accessible.
    * 
-   * @param o
-   * @return all declared fields on Object o as accessible
+   * @param o Object to access
+   * @return all declared Fields on Object o as accessible
    */
   public Field[] getAllFields(Object o) {
     Field[] fields = o.getClass().getDeclaredFields();
@@ -53,10 +54,10 @@ public class Privateer {
   }
   
   /**
-   * Returns all declared methods on Object o as accessible.
+   * Returns all declared Methods on Object o as accessible.
    * 
-   * @param o
-   * @return all declared methods on Object o as accessible
+   * @param o Object to access
+   * @return all declared Methods on Object o as accessible
    */
   public Method[] getAllMethods(Object o) {
     Method[] methods = o.getClass().getDeclaredMethods();
@@ -67,9 +68,8 @@ public class Privateer {
   /**
    * Gets the specified field on Object o, even if that field is not normally accessible.
    * 
-   * @param o
-   * @param fieldName
-   * @param value
+   * @param o Object to access
+   * @param fieldName Name of field whose value will be returned
    * @throws NoSuchFieldException
    * @throws IllegalAccessException
    */
@@ -84,9 +84,9 @@ public class Privateer {
   /**
    * Sets the specified field on Object o to the specified value, even if that field is not normally accessible.
    * 
-   * @param o
-   * @param fieldName
-   * @param value
+   * @param o Object to access
+   * @param fieldName Name of field whose value will be set
+   * @param value Object value that will be set for the field
    * @throws NoSuchFieldException
    * @throws IllegalAccessException
    */
@@ -101,10 +101,16 @@ public class Privateer {
   /**
    * Calls the specified method on the Object o with the specified arguments. Returns the
    * result as an Object.
+   * <p>
+   * The length of the vararg list of arguments to be passed to the method must match
+   * what the method expects. If no arguments are expected, null can be passed. If one
+   * argument is expected, that argument can be passed as an object. If multiple
+   * arguments are expected, they can be passed as an Object array or as a comma-separated
+   * list.
    * 
-   * @param o
-   * @param methodName
-   * @param args
+   * @param o Object to access
+   * @param methodName Name of method to call
+   * @param args Vararg list of arguments to pass to method
    * @return Object that is the result of calling the named method
    * @throws NoSuchMethodException
    * @throws IllegalAccessException
