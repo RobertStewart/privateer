@@ -5,9 +5,9 @@
   <version>0.1.1</version>
   <name>Privateer</name>
   <description>Unit testing library for exposing all fields and methods</description>
-	<url>http://wombatnation.com/privateer/</url>
-	
-	<parent>
+  <url>http://wombatnation.com/privateer/</url>
+  
+  <parent>
     <groupId>org.sonatype.oss</groupId>
     <artifactId>oss-parent</artifactId>
     <version>5</version>
@@ -21,29 +21,29 @@
       UTF-8
     </project.reporting.outputEncoding>
   </properties>
-	
-	<licenses>
+  
+  <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
       <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
-	
-	<developers>
+  
+  <developers>
     <developer>
       <id>wombatnation</id>
       <name>Robert Stewart</name>
       <email>robert@wombatnation.com</email>
     </developer>
   </developers>
-	
-	<scm>
+  
+  <scm>
     <connection>scm:git:git://github.com/RobertStewart/privateer.git</connection>
     <developerConnection>scm:git:git://github.com/RobertStewart/privateer.git</developerConnection>
     <url>http://github.com/RobertStewart/privateer</url>
   </scm>
-	
+  
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -52,8 +52,8 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-	
-	<build>
+  
+  <build>
     <extensions>
       <extension>
         <groupId>org.apache.maven.wagon</groupId>
@@ -96,8 +96,8 @@
       </plugin>
     </plugins>
   </build>
-	
-	<profiles>
+  
+  <profiles>
     <profile>
       <id>release</id>
       <build>
@@ -118,5 +118,5 @@
       </build>
     </profile>
   </profiles>
-	
+  
 </project>
