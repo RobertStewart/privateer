@@ -43,15 +43,15 @@
     <developerConnection>scm:git:git://github.com/RobertStewart/privateer.git</developerConnection>
     <url>http://github.com/RobertStewart/privateer</url>
   </scm>
-  
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.8.2</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.9</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
   
   <build>
     <extensions>
