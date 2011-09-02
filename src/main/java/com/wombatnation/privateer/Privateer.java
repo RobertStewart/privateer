@@ -67,10 +67,11 @@ public class Privateer {
   
   /**
    * Gets the specified field on Object o, even if that field is not normally accessible.
+   * Only fields declared on the class for Object o can be accessed.
    * 
    * @param o Object to access
    * @param fieldName Name of field whose value will be returned
-   * @throws NoSuchFieldException
+   * @throws NoSuchFieldException if no field matches <code>fieldName</code>
    * @throws IllegalAccessException
    */
   public Object getField(Object o, String fieldName)
@@ -83,12 +84,14 @@ public class Privateer {
   
   /**
    * Sets the specified field on Object o to the specified value, even if that field is not normally accessible.
+   * Only fields declared on the class for Object o can be accessed.
    * 
    * @param o Object to access
    * @param fieldName Name of field whose value will be set
    * @param value Object value that will be set for the field
-   * @throws NoSuchFieldException
+   * @throws NoSuchFieldException if no field matches <code>fieldName</code>
    * @throws IllegalAccessException
+   * @throws IllegalArgumentException if the type of <code>value</code> is incorrect
    */
   public void setField(Object o, String fieldName, Object value)
       throws NoSuchFieldException, IllegalAccessException {
@@ -100,7 +103,7 @@ public class Privateer {
   
   /**
    * Calls the specified method on the Object o with the specified arguments. Returns the
-   * result as an Object.
+   * result as an Object. Only methods declared on the class for Object o can be called.
    * <p>
    * The length of the vararg list of arguments to be passed to the method must match
    * what the method expects. If no arguments are expected, null can be passed. If one
@@ -112,14 +115,16 @@ public class Privateer {
    * @param methodName Name of method to call
    * @param args Vararg list of arguments to pass to method
    * @return Object that is the result of calling the named method
-   * @throws NoSuchMethodException
+   * @throws NoSuchMethodException if the name or arguments don't match any declared method
    * @throws IllegalAccessException
-   * @throws InvocationTargetException
+   * @throws InvocationTargetException if some unexpected error occurs when invoking a method that was thought to match
+   * @throws IllegalArgumentException if the argument count doesn't match any method that has the same name
    */
   public Object callMethod(Object o, String methodName, Object... args)
       throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 
     Method method = null;
+    
     if (args == null || args.length == 0) {
       method = o.getClass().getDeclaredMethod(methodName);
     } else {
@@ -127,11 +132,58 @@ public class Privateer {
       for (int i = 0; i < args.length; i++) {
         types[i] = args[i].getClass();
       }
-      method = o.getClass().getDeclaredMethod(methodName, types);
+      try {
+        method = o.getClass().getDeclaredMethod(methodName, types);
+      } catch (NoSuchMethodException e) {
+        // Try more complex comparison for matching args to supertypes in the params
+        method = findSupertypeMethod(o, methodName, types);
+      }
     }
+    
+    if (method == null) {
+      throw new NoSuchMethodException("Found no method named" + methodName + " with matching params");
+    }
+    
     method.setAccessible(true);
     
     return method.invoke(o, args);
+  }
+  
+  /**
+   * Examines each argument to see if a param in the same position is a supertype. This method is
+   * needed because getDeclaredMethod() does a formal type match. For example, if the method takes
+   * a java.util.List as a parameter, getDeclaredMethod() will never match, since the formal type
+   * of whatever you pass will be a concrete class.
+   * 
+   * @param o
+   * @param methodName
+   * @param types
+   * @return A matching Method or null
+   */
+  private Method findSupertypeMethod(Object o, String methodName, Class<?>[] types) {
+    
+    Method matchingMethod = null;
+    Method[] methods = o.getClass().getDeclaredMethods();
+    
+    methodloop:
+    for (Method method : methods) {
+      if (methodName.equals(method.getName())) {
+        Class<?>[] params = method.getParameterTypes();
+        if (params.length == types.length) {
+          for (int i = 0; i < params.length; i++) {
+            // Check if param is supertype of arg in the same position
+            if (!params[i].isAssignableFrom(types[i])) {
+              break methodloop;
+            }
+          }
+        }
+        // If we reach here, then all params and args were compatible
+        matchingMethod = method;
+        break;
+      }
+    }
+    
+    return matchingMethod;
   }
 
 }
