@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.wombatnation</groupId>
   <artifactId>privateer</artifactId>
-  <version>0.1.1</version>
+  <version>0.2.0</version>
   <name>Privateer</name>
   <description>Unit testing library for exposing all fields and methods</description>
   <url>http://wombatnation.com/privateer/</url>
@@ -44,14 +44,14 @@
     <url>http://github.com/RobertStewart/privateer</url>
   </scm>
 
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.9</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.9</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
   
   <build>
     <extensions>
