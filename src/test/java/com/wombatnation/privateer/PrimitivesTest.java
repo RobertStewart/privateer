@@ -2,6 +2,7 @@ package com.wombatnation.privateer;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class PrimitivesTest {
@@ -10,7 +11,8 @@ public class PrimitivesTest {
 		return a;
 	}
 
-	@Test
+//	@Test
+	@Ignore
 	public void testIntArg() throws Exception {
 		Privateer p = new Privateer();
 		
